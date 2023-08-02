@@ -1,0 +1,29 @@
+version: "3"
+services:
+  nodobfa:
+    container_name: nodobfa
+    image: nodobfa
+    tty: true
+    ports:
+      - "8545:8545"
+      - "8546:8546"
+      - "30303:30303/tcp"
+      - "30303:30303/udp"
+      - "30304:30304/udp"
+    environment:
+      - BFAHOME=/home/bfa/bfa
+      - PATH=${PATH}:/home/bfa/bfa/bin:/home/bfa/bin
+    volumes:
+      - nodo_data:/nodo_data/
+  apibfa:
+    container_name: apibfa
+    image: apibfa
+    tty: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - nodo_data:/nodo_data/
+    links:
+      - nodobfa
+volumes:
+  nodo_data:
